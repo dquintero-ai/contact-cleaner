@@ -1,0 +1,29 @@
+name,email,phone,company,city
+John Smith,john.smith@example.com,(713) 555-0101,acme widgets,houston
+Jane Doe,jane.doe@gmail.com,(713) 555-0102,Beta LLC,Austin
+Bob Mcdonald,bob.mcdonald@yahoo.com,(713) 555-0103,Gamma Inc,Dallas
+Sara Chen,sara.chen@outlook.com,(713) 555-0104,Delta Co,San Antonio
+Tom Reed,tom.reed@mail.com,(713) 555-0105,Echo Ltd,El Paso
+Amy Park,amy.park@site.com,(713) 555-0106,Foxtrot Labs,Plano
+Luis Vega,luis.vega@domain.org,(713) 555-0107,Hotel Group,Laredo
+Owen Cole,owen.cole@example.com,(713) 555-0108,,
+Pat Quinn,pat.quinn@example.com,(713) 555-0109,,
+Riley Stone,,(713) 555-0110,Kappa Goods,Tyler
+Sam Torres,,(713) 555-0111,Lambda Print,Odessa
+Uma West,,(713) 555-0112,Mu Corp,Houston
+Vic Young,,(713) 555-0113,,Austin
+Wes Adams,,(713) 555-0114,Nu Inc,Dallas
+Yara Bell,,(713) 555-0115,Xi LLC,Plano
+Zoe Baker,zoe.baker@example.com,,Omicron,Houston
+Alan Clark,alan.clark@example.com,,Pi Co,Austin
+Beth Diaz,beth.diaz@example.com,,Rho Services,Dallas
+Cara Eng,cara.eng@example.com,,Sigma,El Paso
+Sean O'Brien,sean.obrien@example.com,(713) 555-0119,Chi LLC,Laredo
+Frank Jones,frank.jones@example.com,(713) 555-0140,Phi Corp,Houston
+Gina Kim,gina.kim@example.com,(713) 555-0141,Psi Co,Dallas
+Hank Lopez,hank.lopez@one.com,(713) 555-0150,Omega,Plano
+Iris Moon,iris.moon@alpha.com,(713) 555-0151,Redline,Tyler
+Jade Nguyen,jade.nguyen@example.com,,Blue Oak,Waco
+Jade Nguyen,jade.n@other.com,,Blue Oak,Odessa
+Kai Ortiz,,(713) 555-0160,Northwind,Midland
+Kai Ortiz,,(713) 555-0161,Northwind,Midland

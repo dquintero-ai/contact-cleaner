@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact cleaning report</title>
+  <style>
+
+:root {
+  --ink: #1c2830;
+  --muted: #5c6b76;
+  --line: #d5dee4;
+  --paper: #eef2f4;
+  --card: #ffffff;
+  --navy: #16324f;
+  --highlight: #fff4cc;
+  --match: #e5f4f2;
+  --empty: #6b7780;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+a { color: var(--navy); }
+.banner {
+  background: var(--navy);
+  color: #f7fafc;
+  padding: 40px 24px 32px;
+}
+.banner-inner, main { max-width: 1100px; margin: 0 auto; }
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b7c9d6;
+}
+h1 { margin: 0 0 8px; font-size: 34px; font-weight: 650; letter-spacing: -0.02em; }
+.banner p { margin: 0; color: #d5e2ea; }
+.contents { margin-top: 18px; font-size: 14px; }
+.contents a { color: #ffffff; margin-right: 16px; }
+main { padding: 28px 24px 64px; }
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 22px;
+}
+h2 { margin: 0 0 8px; font-size: 22px; letter-spacing: -0.01em; }
+.section-kicker {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.intro { margin: 0 0 18px; color: var(--muted); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stat {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  background: #fbfcfd;
+}
+.stat.wide { grid-column: 1 / -1; }
+.stat .number { display: block; font-size: 32px; font-weight: 650; letter-spacing: -0.03em; }
+.stat .label { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
+.equation {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: #f4f7f8;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.note { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+.legend { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+.swatch.changed { background: var(--highlight); box-shadow: inset 3px 0 0 #e2b340; }
+.swatch.matched { background: var(--match); box-shadow: inset 3px 0 0 #1f6f6a; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: #f4f7f8; font-weight: 650; white-space: nowrap; }
+.as-typed { white-space: pre-wrap; word-break: break-word; }
+td.changed { background: var(--highlight); box-shadow: inset 3px 0 0 #e2b340; }
+td.matched { background: var(--match); box-shadow: inset 3px 0 0 #1f6f6a; }
+.row-id { width: 92px; font-weight: 650; background: #fbfcfd; }
+.when { width: 72px; color: var(--muted); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+.outcome {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pair {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.pair h3 { margin: 0 0 4px; font-size: 16px; }
+.pair p { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.empty { color: var(--empty); font-style: italic; }
+.badge {
+  display: inline-block;
+  margin: 0 6px 4px 0;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fde8e4;
+  color: #8a2e14;
+  font-size: 12px;
+  font-weight: 650;
+}
+footer { color: var(--muted); font-size: 13px; }
+@media (max-width: 800px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  h1 { font-size: 28px; }
+  section { padding: 20px; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="banner">
+    <div class="banner-inner">
+      <p class="eyebrow">Contact Cleaner</p>
+      <h1>Contact cleaning report</h1>
+      <p>sample_messy.csv · November 9, 2026</p>
+      <p class="contents">
+        <a href="#summary">Summary</a>
+        <a href="#changes">Changes</a>
+        <a href="#duplicates">Duplicates</a>
+        <a href="#rejected">Rejected</a>
+      </p>
+    </div>
+  </header>
+  <main>
+    
+    <section id="summary">
+      <p class="section-kicker">01 · Summary</p>
+      <h2>Summary</h2>
+      <p class="intro">Results for sample_messy.csv. The input file was not changed.</p>
+      <div class="stats">
+        <div class="stat"><span class="number">40</span><span class="label">Rows in</span></div>
+        <div class="stat"><span class="number">28</span><span class="label">Clean rows out</span></div>
+        <div class="stat"><span class="number">4</span><span class="label">Duplicates removed</span></div>
+        <div class="stat"><span class="number">8</span><span class="label">Rows rejected</span></div>
+        <div class="stat wide"><span class="number">5</span><span class="label">Phones blanked (including rejected rows)</span></div>
+      </div>
+      <p class="equation">40 rows in = 28 clean rows + 4 duplicates removed + 8 rows rejected</p>
+      <p class="note">A phone is blanked when the digits cannot be turned into a US number. Placeholder words such as N/A, null, none, and - are treated as empty and are not included in that count. This count includes rows that were later rejected.</p>
+    </section>
+    
+    
+    <section id="changes">
+      <p class="section-kicker">02 · Changes</p>
+      <h2>Changes</h2>
+      
+        <p class="intro">38 rows changed. Rows that were already clean are not listed.</p>
+        <p class="legend"><span class="swatch changed"></span>Highlighted cells are the values that changed.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Row</th>
+                <th></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th>City</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="row-id" rowspan="2">Row 2<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">  john   smith  </td><td class="as-typed changed">  JOHN.SMITH@EXAMPLE.COM  </td><td class="as-typed changed">  713-555-0101  </td><td class="as-typed changed">  acme widgets  </td><td class="as-typed changed">  houston  </td></tr><tr><td class="when">After</td><td class="as-typed changed">John Smith</td><td class="as-typed changed">john.smith@example.com</td><td class="as-typed changed">(713) 555-0101</td><td class="as-typed changed">acme widgets</td><td class="as-typed changed">houston</td></tr><tr><td class="row-id" rowspan="2">Row 3<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">jane DOE</td><td class="as-typed changed">JANE.DOE@GMAIL.COM</td><td class="as-typed">(713) 555-0102</td><td class="as-typed">Beta LLC</td><td class="as-typed">Austin</td></tr><tr><td class="when">After</td><td class="as-typed changed">Jane Doe</td><td class="as-typed changed">jane.doe@gmail.com</td><td class="as-typed">(713) 555-0102</td><td class="as-typed">Beta LLC</td><td class="as-typed">Austin</td></tr><tr><td class="row-id" rowspan="2">Row 4<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">bob mcdonald</td><td class="as-typed">bob.mcdonald@yahoo.com</td><td class="as-typed changed">7135550103</td><td class="as-typed">Gamma Inc</td><td class="as-typed">Dallas</td></tr><tr><td class="when">After</td><td class="as-typed changed">Bob Mcdonald</td><td class="as-typed">bob.mcdonald@yahoo.com</td><td class="as-typed changed">(713) 555-0103</td><td class="as-typed">Gamma Inc</td><td class="as-typed">Dallas</td></tr><tr><td class="row-id" rowspan="2">Row 5<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">sara chen</td><td class="as-typed changed">Sara.Chen@Outlook.com</td><td class="as-typed changed">1-713-555-0104</td><td class="as-typed">Delta Co</td><td class="as-typed">San Antonio</td></tr><tr><td class="when">After</td><td class="as-typed changed">Sara Chen</td><td class="as-typed changed">sara.chen@outlook.com</td><td class="as-typed changed">(713) 555-0104</td><td class="as-typed">Delta Co</td><td class="as-typed">San Antonio</td></tr><tr><td class="row-id" rowspan="2">Row 6<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">tom reed</td><td class="as-typed changed">TOM.REED@MAIL.COM</td><td class="as-typed changed">713.555.0105</td><td class="as-typed">Echo Ltd</td><td class="as-typed">El Paso</td></tr><tr><td class="when">After</td><td class="as-typed changed">Tom Reed</td><td class="as-typed changed">tom.reed@mail.com</td><td class="as-typed changed">(713) 555-0105</td><td class="as-typed">Echo Ltd</td><td class="as-typed">El Paso</td></tr><tr><td class="row-id" rowspan="2">Row 7<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">amy park</td><td class="as-typed changed">Amy.Park@Site.COM</td><td class="as-typed changed">713 555 0106</td><td class="as-typed">Foxtrot Labs</td><td class="as-typed">Plano</td></tr><tr><td class="when">After</td><td class="as-typed changed">Amy Park</td><td class="as-typed changed">amy.park@site.com</td><td class="as-typed changed">(713) 555-0106</td><td class="as-typed">Foxtrot Labs</td><td class="as-typed">Plano</td></tr><tr><td class="row-id" rowspan="2">Row 8<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">luis vega</td><td class="as-typed changed">Luis.Vega@Domain.ORG</td><td class="as-typed changed">+1 (713) 555-0107</td><td class="as-typed">Hotel Group</td><td class="as-typed">Laredo</td></tr><tr><td class="when">After</td><td class="as-typed changed">Luis Vega</td><td class="as-typed changed">luis.vega@domain.org</td><td class="as-typed changed">(713) 555-0107</td><td class="as-typed">Hotel Group</td><td class="as-typed">Laredo</td></tr><tr><td class="row-id" rowspan="2">Row 9<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Owen Cole</td><td class="as-typed">owen.cole@example.com</td><td class="as-typed changed">713-555-0108</td><td class="as-typed changed">N/A</td><td class="as-typed changed">null</td></tr><tr><td class="when">After</td><td class="as-typed">Owen Cole</td><td class="as-typed">owen.cole@example.com</td><td class="as-typed changed">(713) 555-0108</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td></tr><tr><td class="row-id" rowspan="2">Row 10<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Pat Quinn</td><td class="as-typed">pat.quinn@example.com</td><td class="as-typed">(713) 555-0109</td><td class="as-typed changed">none</td><td class="as-typed changed">-</td></tr><tr><td class="when">After</td><td class="as-typed">Pat Quinn</td><td class="as-typed">pat.quinn@example.com</td><td class="as-typed">(713) 555-0109</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td></tr><tr><td class="row-id" rowspan="2">Row 11<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Riley Stone</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">713-555-0110</td><td class="as-typed">Kappa Goods</td><td class="as-typed">Tyler</td></tr><tr><td class="when">After</td><td class="as-typed">Riley Stone</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0110</td><td class="as-typed">Kappa Goods</td><td class="as-typed">Tyler</td></tr><tr><td class="row-id" rowspan="2">Row 12<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">sam torres</td><td class="as-typed changed">   </td><td class="as-typed changed">1 713 555 0111</td><td class="as-typed">Lambda Print</td><td class="as-typed">Odessa</td></tr><tr><td class="when">After</td><td class="as-typed changed">Sam Torres</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0111</td><td class="as-typed">Lambda Print</td><td class="as-typed">Odessa</td></tr><tr><td class="row-id" rowspan="2">Row 13<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Uma West</td><td class="as-typed changed">n/a</td><td class="as-typed">(713) 555-0112</td><td class="as-typed">Mu Corp</td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed">Uma West</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">(713) 555-0112</td><td class="as-typed">Mu Corp</td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 14<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Vic Young</td><td class="as-typed changed">NULL</td><td class="as-typed changed">713.555.0113</td><td class="as-typed changed">-</td><td class="as-typed">Austin</td></tr><tr><td class="when">After</td><td class="as-typed">Vic Young</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0113</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Austin</td></tr><tr><td class="row-id" rowspan="2">Row 15<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Wes Adams</td><td class="as-typed changed">-</td><td class="as-typed changed">7135550114</td><td class="as-typed">Nu Inc</td><td class="as-typed">Dallas</td></tr><tr><td class="when">After</td><td class="as-typed">Wes Adams</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0114</td><td class="as-typed">Nu Inc</td><td class="as-typed">Dallas</td></tr><tr><td class="row-id" rowspan="2">Row 16<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">yara bell</td><td class="as-typed changed">None</td><td class="as-typed changed">1-713-555-0115</td><td class="as-typed">Xi LLC</td><td class="as-typed">Plano</td></tr><tr><td class="when">After</td><td class="as-typed changed">Yara Bell</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0115</td><td class="as-typed">Xi LLC</td><td class="as-typed">Plano</td></tr><tr><td class="row-id" rowspan="2">Row 17<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Zoe Baker</td><td class="as-typed">zoe.baker@example.com</td><td class="as-typed changed">555-0116</td><td class="as-typed">Omicron</td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed">Zoe Baker</td><td class="as-typed">zoe.baker@example.com</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Omicron</td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 18<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">alan clark</td><td class="as-typed changed">ALAN.CLARK@EXAMPLE.COM</td><td class="as-typed changed">27135550117</td><td class="as-typed">Pi Co</td><td class="as-typed">Austin</td></tr><tr><td class="when">After</td><td class="as-typed changed">Alan Clark</td><td class="as-typed changed">alan.clark@example.com</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Pi Co</td><td class="as-typed">Austin</td></tr><tr><td class="row-id" rowspan="2">Row 19<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">beth diaz</td><td class="as-typed">beth.diaz@example.com</td><td class="as-typed changed">713-555-0118 x99</td><td class="as-typed">Rho Services</td><td class="as-typed">Dallas</td></tr><tr><td class="when">After</td><td class="as-typed changed">Beth Diaz</td><td class="as-typed">beth.diaz@example.com</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Rho Services</td><td class="as-typed">Dallas</td></tr><tr><td class="row-id" rowspan="2">Row 20<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">cara eng</td><td class="as-typed">cara.eng@example.com</td><td class="as-typed changed">-</td><td class="as-typed">Sigma</td><td class="as-typed">El Paso</td></tr><tr><td class="when">After</td><td class="as-typed changed">Cara Eng</td><td class="as-typed">cara.eng@example.com</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Sigma</td><td class="as-typed">El Paso</td></tr><tr><td class="row-id" rowspan="2">Row 21<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed changed">sean o&#x27;brien</td><td class="as-typed changed">SEAN.OBRIEN@EXAMPLE.COM</td><td class="as-typed changed">713-555-0119</td><td class="as-typed">Chi LLC</td><td class="as-typed">Laredo</td></tr><tr><td class="when">After</td><td class="as-typed changed">Sean O&#x27;Brien</td><td class="as-typed changed">sean.obrien@example.com</td><td class="as-typed changed">(713) 555-0119</td><td class="as-typed">Chi LLC</td><td class="as-typed">Laredo</td></tr><tr><td class="row-id" rowspan="2">Row 22<span class="outcome">Removed as duplicate</span></td><td class="when">Before</td><td class="as-typed changed">frank jones</td><td class="as-typed changed">  FRANK.JONES@EXAMPLE.COM  </td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed changed">Frank Jones</td><td class="as-typed changed">frank.jones@example.com</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 23<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Frank Jones</td><td class="as-typed">frank.jones@example.com</td><td class="as-typed changed">713-555-0140</td><td class="as-typed">Phi Corp</td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed">Frank Jones</td><td class="as-typed">frank.jones@example.com</td><td class="as-typed changed">(713) 555-0140</td><td class="as-typed">Phi Corp</td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 24<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Gina Kim</td><td class="as-typed">gina.kim@example.com</td><td class="as-typed changed">713-555-0141</td><td class="as-typed">Psi Co</td><td class="as-typed">Dallas</td></tr><tr><td class="when">After</td><td class="as-typed">Gina Kim</td><td class="as-typed">gina.kim@example.com</td><td class="as-typed changed">(713) 555-0141</td><td class="as-typed">Psi Co</td><td class="as-typed">Dallas</td></tr><tr><td class="row-id" rowspan="2">Row 25<span class="outcome">Removed as duplicate</span></td><td class="when">Before</td><td class="as-typed changed">GINA KIM</td><td class="as-typed changed">  GINA.KIM@EXAMPLE.COM  </td><td class="as-typed">(713) 555-0142</td><td class="as-typed">Psi Co</td><td class="as-typed">Dallas</td></tr><tr><td class="when">After</td><td class="as-typed changed">Gina Kim</td><td class="as-typed changed">gina.kim@example.com</td><td class="as-typed">(713) 555-0142</td><td class="as-typed">Psi Co</td><td class="as-typed">Dallas</td></tr><tr><td class="row-id" rowspan="2">Row 26<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Hank Lopez</td><td class="as-typed">hank.lopez@one.com</td><td class="as-typed changed">713-555-0150</td><td class="as-typed">Omega</td><td class="as-typed">Plano</td></tr><tr><td class="when">After</td><td class="as-typed">Hank Lopez</td><td class="as-typed">hank.lopez@one.com</td><td class="as-typed changed">(713) 555-0150</td><td class="as-typed">Omega</td><td class="as-typed">Plano</td></tr><tr><td class="row-id" rowspan="2">Row 27<span class="outcome">Removed as duplicate</span></td><td class="when">Before</td><td class="as-typed changed">hank lopez</td><td class="as-typed">hank@two.com</td><td class="as-typed changed">1 (713) 555-0150</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">Plano</td></tr><tr><td class="when">After</td><td class="as-typed changed">Hank Lopez</td><td class="as-typed">hank@two.com</td><td class="as-typed changed">(713) 555-0150</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">Plano</td></tr><tr><td class="row-id" rowspan="2">Row 28<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Iris Moon</td><td class="as-typed">iris.moon@alpha.com</td><td class="as-typed changed">713.555.0151</td><td class="as-typed">Redline</td><td class="as-typed">Tyler</td></tr><tr><td class="when">After</td><td class="as-typed">Iris Moon</td><td class="as-typed">iris.moon@alpha.com</td><td class="as-typed changed">(713) 555-0151</td><td class="as-typed">Redline</td><td class="as-typed">Tyler</td></tr><tr><td class="row-id" rowspan="2">Row 31<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Jade Nguyen</td><td class="as-typed">jade.n@other.com</td><td class="as-typed changed">none</td><td class="as-typed">Blue Oak</td><td class="as-typed">Odessa</td></tr><tr><td class="when">After</td><td class="as-typed">Jade Nguyen</td><td class="as-typed">jade.n@other.com</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Blue Oak</td><td class="as-typed">Odessa</td></tr><tr><td class="row-id" rowspan="2">Row 32<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Kai Ortiz</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">713-555-0160</td><td class="as-typed">Northwind</td><td class="as-typed">Midland</td></tr><tr><td class="when">After</td><td class="as-typed">Kai Ortiz</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0160</td><td class="as-typed">Northwind</td><td class="as-typed">Midland</td></tr><tr><td class="row-id" rowspan="2">Row 33<span class="outcome">Kept</span></td><td class="when">Before</td><td class="as-typed">Kai Ortiz</td><td class="as-typed changed">none</td><td class="as-typed changed">713-555-0161</td><td class="as-typed">Northwind</td><td class="as-typed">Midland</td></tr><tr><td class="when">After</td><td class="as-typed">Kai Ortiz</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed">(713) 555-0161</td><td class="as-typed">Northwind</td><td class="as-typed">Midland</td></tr><tr><td class="row-id" rowspan="2">Row 34<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">no.name@example.com</td><td class="as-typed changed">713-555-0170</td><td class="as-typed">Reject Co</td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">no.name@example.com</td><td class="as-typed changed">(713) 555-0170</td><td class="as-typed">Reject Co</td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 35<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed changed">N/A</td><td class="as-typed">placeholder.name@example.com</td><td class="as-typed changed">713-555-0171</td><td class="as-typed">Reject Co</td><td class="as-typed">Austin</td></tr><tr><td class="when">After</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">placeholder.name@example.com</td><td class="as-typed changed">(713) 555-0171</td><td class="as-typed">Reject Co</td><td class="as-typed">Austin</td></tr><tr><td class="row-id" rowspan="2">Row 36<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed changed">   </td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">99</td><td class="as-typed">Ghost Co</td><td class="as-typed">Austin</td></tr><tr><td class="when">After</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Ghost Co</td><td class="as-typed">Austin</td></tr><tr><td class="row-id" rowspan="2">Row 37<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed changed">none</td><td class="as-typed">none@</td><td class="as-typed changed">713-555-0175</td><td class="as-typed">Multi Co</td><td class="as-typed">Houston</td></tr><tr><td class="when">After</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">none@</td><td class="as-typed changed">(713) 555-0175</td><td class="as-typed">Multi Co</td><td class="as-typed">Houston</td></tr><tr><td class="row-id" rowspan="2">Row 38<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed">Kara Ortiz</td><td class="as-typed changed">  not-an-email  </td><td class="as-typed changed">713-555-0180</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Laredo</td></tr><tr><td class="when">After</td><td class="as-typed">Kara Ortiz</td><td class="as-typed changed">not-an-email</td><td class="as-typed changed">(713) 555-0180</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Laredo</td></tr><tr><td class="row-id" rowspan="2">Row 39<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed">Leo Perez</td><td class="as-typed">leo@nodot</td><td class="as-typed changed">713-555-0181</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Tyler</td></tr><tr><td class="when">After</td><td class="as-typed">Leo Perez</td><td class="as-typed">leo@nodot</td><td class="as-typed changed">(713) 555-0181</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Tyler</td></tr><tr><td class="row-id" rowspan="2">Row 40<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed">Paul Upton</td><td class="as-typed changed">  N/A  </td><td class="as-typed changed">  null  </td><td class="as-typed changed">-</td><td class="as-typed changed">none</td></tr><tr><td class="when">After</td><td class="as-typed">Paul Upton</td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td></tr><tr><td class="row-id" rowspan="2">Row 41<span class="outcome">Rejected</span></td><td class="when">Before</td><td class="as-typed">Rosa Walsh</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed">  123  </td><td class="as-typed">Short Phone Co</td><td class="as-typed">Waco</td></tr><tr><td class="when">After</td><td class="as-typed">Rosa Walsh</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed changed"><span class="empty">(empty)</span></td><td class="as-typed">Short Phone Co</td><td class="as-typed">Waco</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+    </section>
+    
+    
+    <section id="duplicates">
+      <p class="section-kicker">03 · Duplicates</p>
+      <h2>Duplicates</h2>
+      
+        <p class="intro">4 duplicates were removed. Each removed row is shown beside the row that was kept. These are the cleaned values, which is how the rows were compared.</p>
+        <p class="legend"><span class="swatch matched"></span>Highlighted cells are the email or phone that matched.</p>
+        
+    <article class="pair">
+      <h3>Row 22 removed, next to kept row 23</h3>
+      <p>Same email after cleaning. The kept row has more filled-in fields (5 of 5, compared with 3 of 5).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Kept · row 23</th>
+              <th>Removed · row 22</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>Name</th><td class="as-typed">Frank Jones</td><td class="as-typed">Frank Jones</td></tr><tr><th>Email</th><td class="as-typed matched">frank.jones@example.com</td><td class="as-typed matched">frank.jones@example.com</td></tr><tr><th>Phone</th><td class="as-typed">(713) 555-0140</td><td class="as-typed"><span class="empty">(empty)</span></td></tr><tr><th>Company</th><td class="as-typed">Phi Corp</td><td class="as-typed"><span class="empty">(empty)</span></td></tr><tr><th>City</th><td class="as-typed">Houston</td><td class="as-typed">Houston</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    
+    <article class="pair">
+      <h3>Row 25 removed, next to kept row 24</h3>
+      <p>Same email after cleaning. Both rows have the same number of filled-in fields. The earlier row in the file was kept.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Kept · row 24</th>
+              <th>Removed · row 25</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>Name</th><td class="as-typed">Gina Kim</td><td class="as-typed">Gina Kim</td></tr><tr><th>Email</th><td class="as-typed matched">gina.kim@example.com</td><td class="as-typed matched">gina.kim@example.com</td></tr><tr><th>Phone</th><td class="as-typed">(713) 555-0141</td><td class="as-typed">(713) 555-0142</td></tr><tr><th>Company</th><td class="as-typed">Psi Co</td><td class="as-typed">Psi Co</td></tr><tr><th>City</th><td class="as-typed">Dallas</td><td class="as-typed">Dallas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    
+    <article class="pair">
+      <h3>Row 27 removed, next to kept row 26</h3>
+      <p>Same phone number after cleaning. The kept row has more filled-in fields (5 of 5, compared with 4 of 5).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Kept · row 26</th>
+              <th>Removed · row 27</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>Name</th><td class="as-typed">Hank Lopez</td><td class="as-typed">Hank Lopez</td></tr><tr><th>Email</th><td class="as-typed">hank.lopez@one.com</td><td class="as-typed">hank@two.com</td></tr><tr><th>Phone</th><td class="as-typed matched">(713) 555-0150</td><td class="as-typed matched">(713) 555-0150</td></tr><tr><th>Company</th><td class="as-typed">Omega</td><td class="as-typed"><span class="empty">(empty)</span></td></tr><tr><th>City</th><td class="as-typed">Plano</td><td class="as-typed">Plano</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    
+    <article class="pair">
+      <h3>Row 29 removed, next to kept row 28</h3>
+      <p>Same phone number after cleaning. Both rows have the same number of filled-in fields. The earlier row in the file was kept.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Kept · row 28</th>
+              <th>Removed · row 29</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>Name</th><td class="as-typed">Iris Moon</td><td class="as-typed">Iris Moon</td></tr><tr><th>Email</th><td class="as-typed">iris.moon@alpha.com</td><td class="as-typed">iris@beta.com</td></tr><tr><th>Phone</th><td class="as-typed matched">(713) 555-0151</td><td class="as-typed matched">(713) 555-0151</td></tr><tr><th>Company</th><td class="as-typed">Redline</td><td class="as-typed">Redline</td></tr><tr><th>City</th><td class="as-typed">Tyler</td><td class="as-typed">Tyler</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+    
+        
+    </section>
+    
+    
+    <section id="rejected">
+      <p class="section-kicker">04 · Rejected</p>
+      <h2>Rejected</h2>
+      
+        <p class="intro">8 rows were rejected. The cells below are the original values, before cleaning.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Row</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th>City</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="row-id">Row 34</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">no.name@example.com</td><td class="as-typed">713-555-0170</td><td class="as-typed">Reject Co</td><td class="as-typed">Houston</td><td><span class="badge">missing name</span></td></tr><tr><td class="row-id">Row 35</td><td class="as-typed">N/A</td><td class="as-typed">placeholder.name@example.com</td><td class="as-typed">713-555-0171</td><td class="as-typed">Reject Co</td><td class="as-typed">Austin</td><td><span class="badge">missing name</span></td></tr><tr><td class="row-id">Row 36</td><td class="as-typed">   </td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">99</td><td class="as-typed">Ghost Co</td><td class="as-typed">Austin</td><td><span class="badge">missing name</span><span class="badge">no email and no phone</span></td></tr><tr><td class="row-id">Row 37</td><td class="as-typed">none</td><td class="as-typed">none@</td><td class="as-typed">713-555-0175</td><td class="as-typed">Multi Co</td><td class="as-typed">Houston</td><td><span class="badge">missing name</span><span class="badge">invalid email</span></td></tr><tr><td class="row-id">Row 38</td><td class="as-typed">Kara Ortiz</td><td class="as-typed">  not-an-email  </td><td class="as-typed">713-555-0180</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Laredo</td><td><span class="badge">invalid email</span></td></tr><tr><td class="row-id">Row 39</td><td class="as-typed">Leo Perez</td><td class="as-typed">leo@nodot</td><td class="as-typed">713-555-0181</td><td class="as-typed">Bad Mail Inc</td><td class="as-typed">Tyler</td><td><span class="badge">invalid email</span></td></tr><tr><td class="row-id">Row 40</td><td class="as-typed">Paul Upton</td><td class="as-typed">  N/A  </td><td class="as-typed">  null  </td><td class="as-typed">-</td><td class="as-typed">none</td><td><span class="badge">no email and no phone</span></td></tr><tr><td class="row-id">Row 41</td><td class="as-typed">Rosa Walsh</td><td class="as-typed"><span class="empty">(empty)</span></td><td class="as-typed">  123  </td><td class="as-typed">Short Phone Co</td><td class="as-typed">Waco</td><td><span class="badge">no email and no phone</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+    </section>
+    
+    <footer>Prepared for review. Clean contacts are in contacts_clean.csv. Rejected rows are in contacts_rejected.csv.</footer>
+  </main>
+</body>
+</html>
