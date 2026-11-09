@@ -1,9 +1,0 @@
-name,email,phone,company,city,reason
-,no.name@example.com,713-555-0170,Reject Co,Houston,missing name
-N/A,placeholder.name@example.com,713-555-0171,Reject Co,Austin,missing name
-   ,,99,Ghost Co,Austin,missing name; no email and no phone
-none,none@,713-555-0175,Multi Co,Houston,missing name; invalid email
-Kara Ortiz,  not-an-email  ,713-555-0180,Bad Mail Inc,Laredo,invalid email
-Leo Perez,leo@nodot,713-555-0181,Bad Mail Inc,Tyler,invalid email
-Paul Upton,  N/A  ,  null  ,-,none,no email and no phone
-Rosa Walsh,,  123  ,Short Phone Co,Waco,no email and no phone
