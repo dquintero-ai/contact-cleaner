@@ -27,6 +27,9 @@ PLACEHOLDERS = {
     "--",
 }
 
+# Words in a company or city that always stay ALL CAPS, however they were typed.
+ACRONYMS = {"LLC", "LLP", "LP", "PLC", "IBM", "USA", "NYC", "AI", "HR"}
+
 # A valid email is some text, an @ sign, and a domain that contains a dot.
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -168,8 +171,8 @@ def clean_contact(original):
 
     email = tidy_text(original["email"]).lower()
     phone, phone_was_blanked = clean_phone(original["phone"])
-    company = tidy_text(original["company"])
-    city = tidy_text(original["city"])
+    company = title_case_place(tidy_text(original["company"]))
+    city = title_case_place(tidy_text(original["city"]))
 
     cleaned = {
         "name": name,
@@ -179,6 +182,19 @@ def clean_contact(original):
         "city": city,
     }
     return cleaned, phone_was_blanked
+
+
+# Put a company or city in Title Case ("acme corp" becomes "Acme Corp").
+# Words on the ACRONYMS list are always written in ALL CAPS ("acme llc" becomes "Acme LLC").
+# A trailing period or comma is ignored when checking the list ("llc." becomes "LLC.").
+def title_case_place(text):
+    words = []
+    for word in text.split(" "):
+        if word.strip(".,").upper() in ACRONYMS:
+            words.append(word.upper())
+        else:
+            words.append(word.title())
+    return " ".join(words)
 
 
 # Keep a 10-digit US number, or an 11-digit number that starts with 1.

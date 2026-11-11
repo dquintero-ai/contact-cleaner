@@ -11,6 +11,7 @@
 - Trim extra spaces from every value
 - Treat "N/A", "null", "none", "-" and similar placeholders as empty
 - Names: Title Case (john SMITH → John Smith). Known limitation: names like McDonald or O'Brien may not capitalize perfectly
+- Company and city: Title Case ("acme corp" → "Acme Corp", "SAN ANTONIO" → "San Antonio"). Exception: these words always stay ALL CAPS: LLC, LLP, LP, PLC, IBM, USA, NYC, AI, HR. Known limitation: acronyms not on this list get Title Case.
 - Emails: lowercase. A valid email has text, then @, then a domain with a dot (example: name@site.com)
 - Invalid email → the whole row is rejected (see Rejected rows)
 - Phones: convert to US format (713) 555-0123. Keep only the digits; accept 10 digits, or 11 digits starting with 1
